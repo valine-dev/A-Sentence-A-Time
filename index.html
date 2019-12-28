@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+    <head>
+        <title>Sentences</title>
+
+        <style>
+            body {
+                background-image:url('https://uploadbeta.com/api/pictures/random/');
+                display: flex;
+                height: 100vh;
+                }
+
+            .app {
+                width: 90vw;
+                margin: auto;
+                text-align: center;
+            }
+
+            h1 {
+                font-family: 'ZCOOL XiaoWei', serif;
+                font-size:450%;
+                color:#ffffff;
+            }
+
+            h3 {
+                font-family: 'ZCOOL XiaoWei', serif;
+                font-size:100%;
+                color:#ffffff
+            }
+        </style>
+
+        <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+        <link href="https://fonts.googleapis.com/css?family=ZCOOL+XiaoWei&display=swap" rel="stylesheet">
+
+    </head>
+
+    <body>
+            <div id="app" class="app">
+                <h1>{{ message }}</h1>
+                <h3>{{ info }}</h3>
+            </div>
+
+        <script>
+            var app = new Vue({
+                el: '#app',
+                data() {
+                    return {
+                        message: null,
+                        info: null
+                    }
+                },
+                mounted() {
+                    axios
+                        .get('https://raw.githubusercontent.com/lz233/OneText-Library/master/test.json')
+                        .then(response => {
+                            let data = response.data[Math.round(Math.random()*(response.data.length-1)+1)]
+                            this.message = data.text
+                            this.info = `-- ${data.by}, ${data.from}`
+                        })
+                }
+            })
+        </script>
+    </body>
+
+</html>
